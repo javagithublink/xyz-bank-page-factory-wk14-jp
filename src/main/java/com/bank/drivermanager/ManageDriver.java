@@ -10,7 +10,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import java.time.Duration;
 
-public class DriverManager {
+public class ManageDriver {
 
     public static WebDriver driver;
 

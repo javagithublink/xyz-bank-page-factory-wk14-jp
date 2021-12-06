@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Sanity Test"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="4.379">
+  <properties />
+  
+  
+            <testcase name="bankManagerShouldOpenAccountSuccessfully" time="1.151" classname="com.bank.testsuite.BankTest" />
+                <testcase name="customerShouldLoginAndLogoutSuccessfully" time="3.228" classname="com.bank.testsuite.BankTest" />
+      
+</testsuite>

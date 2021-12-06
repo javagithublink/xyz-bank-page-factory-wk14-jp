@@ -1,39 +1,55 @@
 package com.bank.testsuite;
 
+import com.bank.customlisteners.CustomListeners;
 import com.bank.pages.*;
 import com.bank.testbase.TestBase;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(CustomListeners.class)
 public class BankTest extends TestBase {
 
-    HomePage homePage = new HomePage();
-    BankManagerLoginPage bankManagerLoginPage = new BankManagerLoginPage();
-    AddCustomerPage addCustomerPage = new AddCustomerPage();
-    OpenAccountPage openAccountPage = new OpenAccountPage();
-    CustomerLoginPage customerLoginPage = new CustomerLoginPage();
-    CustomersPage customersPage = new CustomersPage();
+    HomePage homePage;
+    BankManagerLoginPage bankManagerLoginPage;
+    AddCustomerPage addCustomerPage;
+    OpenAccountPage openAccountPage;
+    CustomerLoginPage customerLoginPage;
+    CustomersPage customersPage;
+    AccountPage accountPage;
+
+
+    @BeforeMethod
+    public void init(){
+        homePage = new HomePage();
+        bankManagerLoginPage = new BankManagerLoginPage();
+        addCustomerPage = new AddCustomerPage();
+        openAccountPage = new OpenAccountPage();
+        customerLoginPage = new CustomerLoginPage();
+        customersPage = new CustomersPage();
+        accountPage = new AccountPage();
+    }
 
 
     String firstName = "Harry";
     String lastName = "Potter";
     String postCode = "HA45SQ";
 
-    @Test
+
+    @Test(groups = {"smoke","regression"})
     public void bankManagerShouldAddCustomerSuccessfully() {
         homePage.clickOnBankManagerLogInTab();
         bankManagerLoginPage.clickOnAddCustomerTab();
 
         addCustomerPage.addCustomerDetails(firstName, lastName, postCode);
         addCustomerPage.clickOnAddCustomerButton();
+
         addCustomerPage.verifyPopUpMessage();
         addCustomerPage.clickOnOkButtonOnPopUp();
 
-        //useClickOnElement(By.xpath("//button[normalize-space()='Home']"));
-
-
     }
 
-    @Test
+    @Test(groups = {"sanity","regression"})
     public void bankManagerShouldOpenAccountSuccessfully() {
         homePage.clickOnBankManagerLogInTab();
         bankManagerLoginPage.clickOnOpenAccountTab();
@@ -46,12 +62,14 @@ public class BankTest extends TestBase {
 
     }
 
-    @Test
-    public void customerShouldLoginAndLogoutSuccessfully() {
+    @Test(groups = {"sanity","regression"})
+    public void customerShouldLoginAndLogoutSuccessfully() throws InterruptedException {
         homePage.clickOnCustomerLoginTab();
 
         customerLoginPage.searchCustomer(firstName, lastName);
         customerLoginPage.clickOnLoginButton();
+
+        Thread.sleep(2000);
 
         customersPage.verifyLogOutButtonDisplayed();
         customersPage.verifyYourNameTextDisplayed(firstName, lastName);
@@ -60,37 +78,37 @@ public class BankTest extends TestBase {
 
     }
 
-    @Test
+    @Test (groups = {"regression"})
     public void customerShouldDepositMoneySuccessfully() {
         homePage.clickOnCustomerLoginTab();
 
         customerLoginPage.searchCustomer(firstName, lastName);
         customerLoginPage.clickOnLoginButton();
 
-        customersPage.clickOnDepositTab();
-        customersPage.enterAmount("100");
-        customersPage.clickOnDepositButton();
-        customersPage.verifyDepositSuccessFullMessage();
+        accountPage.clickOnDepositTab();
+        accountPage.enterAmount("100");
+        accountPage.clickOnDepositButton();
+        accountPage.verifyDepositSuccessFullMessage();
 
     }
 
-    @Test
-    public void customerShouldWithdrawMoneySuccessfully(){
+    @Test (groups = {"regression"})
+    public void customerShouldWithdrawMoneySuccessfully() throws InterruptedException {
         homePage.clickOnCustomerLoginTab();
 
         customerLoginPage.searchCustomer(firstName, lastName);
         customerLoginPage.clickOnLoginButton();
 
-        customersPage.clickOnDepositTab();
-        customersPage.enterAmount("100");
-        customersPage.clickOnDepositButton();
-       
+        accountPage.clickOnDepositTab();
+        accountPage.enterAmount("100");
+        accountPage.clickOnDepositButton();
 
-        customersPage.clickOnWithdrawlTab();
-        customersPage.enterWithdrawlAmount("25");
-        customersPage.clickOnDepositButton();
-        customersPage.verifyDepositSuccessFullMessage();
 
+        accountPage.clickOnWithdrawlTab();
+        Thread.sleep(1000);
+        accountPage.enterWithdrawlAmount("25");
+        accountPage.clickOnWithdrawlButton();
+        accountPage.verifyTransactionSuccessfulMessage();
 
 
     }
