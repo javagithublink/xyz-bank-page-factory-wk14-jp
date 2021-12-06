@@ -1,6 +1,7 @@
 package com.bank.pages;
 
 import com.bank.utility.Utility;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -37,6 +38,7 @@ public class CustomersPage extends Utility {
 
     public void verifyLogOutButtonDisplayed(){
         Reporter.log("Verifying logout button"+"\n</br>");
+        pmWaitUntilVisibilityOfElementLocated(By.xpath("//button[normalize-space()='Logout']"),20);
         boolean actual = logOutButton.isDisplayed();
         Assert.assertTrue(actual);
 

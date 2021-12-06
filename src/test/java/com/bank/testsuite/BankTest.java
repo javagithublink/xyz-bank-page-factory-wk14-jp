@@ -63,13 +63,13 @@ public class BankTest extends TestBase {
     }
 
     @Test(groups = {"sanity","regression"})
-    public void customerShouldLoginAndLogoutSuccessfully() throws InterruptedException {
+    public void customerShouldLoginAndLogoutSuccessfully(){
         homePage.clickOnCustomerLoginTab();
 
         customerLoginPage.searchCustomer(firstName, lastName);
         customerLoginPage.clickOnLoginButton();
 
-        Thread.sleep(2000);
+
 
         customersPage.verifyLogOutButtonDisplayed();
         customersPage.verifyYourNameTextDisplayed(firstName, lastName);
@@ -103,10 +103,11 @@ public class BankTest extends TestBase {
         accountPage.enterAmount("100");
         accountPage.clickOnDepositButton();
 
-
+        Thread.sleep(1000);
         accountPage.clickOnWithdrawlTab();
         Thread.sleep(1000);
         accountPage.enterWithdrawlAmount("25");
+        Thread.sleep(1000);
         accountPage.clickOnWithdrawlButton();
         accountPage.verifyTransactionSuccessfulMessage();
 

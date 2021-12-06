@@ -24,7 +24,7 @@ public class AccountPage extends Utility {
     @FindBy(xpath = "//button[normalize-space()='Withdrawl']")
     WebElement withdrawlTab;
 
-    @FindBy(xpath = "//input[@placeholder='amount']")
+    @FindBy(xpath = "(//input[@placeholder='amount'])[1]")
     WebElement withdrawlAmountField;
 
     @FindBy(xpath = "//button[normalize-space()='Withdraw']")
@@ -62,21 +62,26 @@ public class AccountPage extends Utility {
     public void clickOnWithdrawlTab() {
         Reporter.log("Clicking on withdrawl tab" + withdrawlTab.toString() + "\n</br>");
         pmClickOnElement(withdrawlTab);
+
     }
 
     public void enterWithdrawlAmount(String amount) {
         Reporter.log("Entering withdrawl amount" + withdrawlAmountField.toString() + "\n</br>");
+        //waitForElementWithFluentWait(By.xpath("(//input[@placeholder='amount'])[1]"),100,5);
         pmSendTextToElement(withdrawlAmountField, amount);
+
     }
 
     public void clickOnWithdrawlButton() {
         Reporter.log("Clicking on withdrawl button" + withdrawlButton.toString() + "\n</br>");
+        //pmWaitUntilVisibilityOfElementLocated(By.xpath("//button[normalize-space()='Withdraw']"),100);
         pmClickOnElement(withdrawlButton);
     }
 
     public void verifyTransactionSuccessfulMessage() {
         Reporter.log("Verifying withdrawl message" + withdrawlMessage.toString() + "\n</br>");
-        //pmWaitUntilVisibilityOfElementLocated((By) withdrawlMessage,20);
+
+        //pmWaitUntilVisibilityOfElementLocated(By.xpath("//span[contains(normalize-space(),'Transaction successful')]"), 20);
         pmVerifyElements(withdrawlMessage, "Transaction successful", "Withdrawl not successful");
     }
 
